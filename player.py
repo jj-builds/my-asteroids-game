@@ -3,12 +3,17 @@ from circleshape import CircleShape
 from shot import Shot
 from shield import Shield
 import pygame
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
+        from constants import SCREEN_HEIGHT, SCREEN_WIDTH
         self.rotation = 0
         self.timer = 0
         self.forcefield = False
+        self.shield_timer = 15
+        self.s_h = SCREEN_HEIGHT
+        self.s_w = SCREEN_WIDTH
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -20,6 +25,8 @@ class Player(CircleShape):
     
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), LINE_WIDTH)
+        if self.forcefield:
+            pygame.draw.circle(screen, "yellow", self.position, self.radius + 10, 2)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
@@ -29,10 +36,8 @@ class Player(CircleShape):
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
 
     def update(self, dt, screen):
-        from constants import SHIELD_TIMER
         keys = pygame.key.get_pressed()
         self.timer -= dt
-        SHIELD_TIMER -= dt
         if keys[pygame.K_a]:
             self.rotate(-dt)
         if keys[pygame.K_d]:
@@ -47,16 +52,17 @@ class Player(CircleShape):
             else:
                 self.timer = PLAYER_SHOOT_COOLDOWN_SECONDS
                 self.shoot()
-        if SHIELD_TIMER <= 0:
-            self.forcefield = False
-            SHIELD_TIMER = 15
-        if super().collides_with(Shield) == True:
-            self.forcefield = True
+        if self.position[1] > self.s_h:
+            self.position[1] = 0
+        elif self.position[1] < 0:
+            self.position[1] = self.s_h
 
+        if self.position[0] > self.s_w:
+            self.position[0] = 0
+        elif self.position[0] < 0:
+            self.position[0] = self.s_w
+        
 
     def move(self, dt):
-        unit_vector = pygame.Vector2(0, 1)
-        rotated_vector = unit_vector.rotate(self.rotation)
-        rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * dt
-        self.position += rotated_with_speed_vector
-
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.position += forward * PLAYER_SPEED * dt

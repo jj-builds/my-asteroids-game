@@ -7,6 +7,7 @@ from logger import log_event
 from player import Player
 from asteroid import Asteroid
 from shield import Shield
+from shield_field import ShieldField
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 def main():
     pygame.init()
@@ -17,12 +18,17 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    shields = pygame.sprite.Group()
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
-    AsteroidField.containers = (updatable)
+    AsteroidField.containers = (updatable,)
+    ShieldField.containers = (updatable,)
+    shield_field = ShieldField()
     hurdle_spawner = AsteroidField()
     Shot.containers = (shots, drawable, updatable)
-    Shield.containers = (updatable)
+    Shield.containers = (updatable, drawable, shields)
+    shield = Shield(screen)
+    asteroid_field = AsteroidField()
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
     while True:
         dt = (clock.tick(60) / 1000)
@@ -43,8 +49,13 @@ def main():
                 else:
                     asteroid.kill()
                     player.forcefield = False
+        for shield in shields:
+            if shield and player.collides_with(shield):
+                player.forcefield = True
+                shield.kill()
 
-            for shot in shots:
+        for shot in shots:
+            for asteroid in asteroids:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
                     asteroid.split()
