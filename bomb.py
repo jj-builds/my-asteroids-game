@@ -16,7 +16,7 @@ class Shield(CircleShape):
     def draw(self, screen):
         pygame.draw.circle(screen, "red", self.position, self.radius, 2)
 
-    def update(self, dt, screen):
+	def update(self, dt, screen):
         self.position += self.velocity * dt
         if self.position[1] > self.s_h:
             self.position[1] = 0
