@@ -2,8 +2,7 @@ import pygame
 import random
 from circleshape import CircleShape
 from constants import SHIELD_RADIUS, SCREEN_WIDTH, SCREEN_HEIGHT
-
-class Shield(CircleShape):
+class Bomb(CircleShape):
     def __init__(self, screen):
         x = random.randint(0, SCREEN_WIDTH)
         y = random.randint(0, SCREEN_HEIGHT)
@@ -12,6 +11,7 @@ class Shield(CircleShape):
         self.draw(screen)
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
+        self.explosion_radius = 100
 
     def draw(self, screen):
         pygame.draw.circle(screen, "red", self.position, self.radius, 2)
@@ -27,3 +27,6 @@ class Shield(CircleShape):
             self.position[0] = 0
         elif self.position[0] < 0:
             self.position[0] = self.s_w
+
+    def explode(self):
+    	return (self.x - 2), (self.y - 2), (self.x + 2), (self.y + 2) 
