@@ -9,6 +9,7 @@ from asteroid import Asteroid
 from shield import Shield
 from shield_field import ShieldField
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from bomb import Bomb
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -19,6 +20,7 @@ def main():
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
     shields = pygame.sprite.Group()
+    explodable = pygame.sprite.Group()
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable,)
@@ -29,6 +31,8 @@ def main():
     Shield.containers = (updatable, drawable, shields)
     shield = Shield(screen)
     asteroid_field = AsteroidField()
+    Bomb.containers = (drawable, explodable)
+    bomb = Bomb(screen)
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
     while True:
         dt = (clock.tick(60) / 1000)
@@ -60,6 +64,12 @@ def main():
                     log_event("asteroid_shot")
                     asteroid.split()
                     shot.kill()
+            for bomb in explodable:
+                if shot.collides_with(bomb):
+                    my_list = bomb.explode()
+                    for asteroid in asteroids:
+                        asteroid.in_area(my_list[0], my_list[1], my_list[2], my_list[3])
+
         for thing in drawable:
             thing.draw(screen)
         pygame.display.flip()

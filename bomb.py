@@ -2,22 +2,23 @@ import pygame
 import random
 from circleshape import CircleShape
 from constants import SHIELD_RADIUS, SCREEN_WIDTH, SCREEN_HEIGHT
+
 class Bomb(CircleShape):
     def __init__(self, screen):
         x = random.randint(0, SCREEN_WIDTH)
         y = random.randint(0, SCREEN_HEIGHT)
         super().__init__(x, y, SHIELD_RADIUS)
         self.velocity = pygame.Vector2(random.randint(0, 75), random.randint(0, 75))
-        self.draw(screen)
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
-        self.explosion_radius = 100
+        self.explosion_radius = 1000
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "red", self.position, self.radius, 2)
+        pygame.draw.circle(screen, "yellow", self.position, self.radius, 2)
 
-	def update(self, dt, screen):
+    def update(self, dt, screen):
         self.position += self.velocity * dt
+
         if self.position[1] > self.s_h:
             self.position[1] = 0
         elif self.position[1] < 0:
@@ -29,4 +30,9 @@ class Bomb(CircleShape):
             self.position[0] = self.s_w
 
     def explode(self):
-    	return (self.x - 2), (self.y - 2), (self.x + 2), (self.y + 2) 
+        self.kill()
+        print('bomb exploded')
+        return [self.position.x - self.explosion_radius,
+            self.position.y - self.explosion_radius,
+            self.position.x + self.explosion_radius,
+            self.position.y + self.explosion_radius]

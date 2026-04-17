@@ -29,3 +29,9 @@ class Asteroid(CircleShape):
             asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)
             asteroid1.velocity = direction * 1.2
             asteroid2.velocity = direction2 * 1.2
+    def in_area(self, x_1, y_1, x_2, y_2):
+        if self.position[0] >= x_1 and self.position[0] <= x_2 and self.position[1] >= y_1 and self.position[1] <= y_2:
+            self.kill()
+            return
+        else:
+            return
