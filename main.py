@@ -10,6 +10,7 @@ from shield import Shield
 from shield_field import ShieldField
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from bomb import Bomb
+from bombfield import BombField
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -25,6 +26,8 @@ def main():
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable,)
     ShieldField.containers = (updatable,)
+    BombField.containers = (updatable,)
+    bombfield = BombField()
     shield_field = ShieldField()
     hurdle_spawner = AsteroidField()
     Shot.containers = (shots, drawable, updatable)
