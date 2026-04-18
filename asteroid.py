@@ -11,6 +11,8 @@ class Asteroid(CircleShape):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_b]:
             pygame.draw.circle(screen, "blue", self.position, self.radius, LINE_WIDTH)
+        elif keys[pygame.K_r]:
+            pygame.draw.circle(screen, "red", self.position, self.radius, LINE_WIDTH)
         else:
             pygame.draw.circle(screen, "white", self.position, self.radius, LINE_WIDTH)
     def update(self, dt, screen):

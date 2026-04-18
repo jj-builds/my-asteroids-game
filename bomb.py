@@ -31,7 +31,6 @@ class Bomb(CircleShape):
 
     def explode(self):
         self.kill()
-        print('bomb exploded')
         return [self.position.x - self.explosion_radius,
             self.position.y - self.explosion_radius,
             self.position.x + self.explosion_radius,

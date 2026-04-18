@@ -25,3 +25,8 @@ class Shot(CircleShape):
 
         if keys[pygame.K_e]:
             self.kill()
+        if keys[pygame.K_SPACE]:
+            if keys[pygame.K_m]:    
+                if keys[pygame.K_COMMA]:
+                    if keys[pygame.K_PERIOD]:
+                        self.kill()

@@ -1,5 +1,6 @@
 import pygame
 import sys
+import math
 from asteroidfield import AsteroidField
 from shot import Shot
 from logger import log_state
@@ -16,6 +17,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
+    score = 0
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
@@ -52,6 +54,8 @@ def main():
                 if player.forcefield == False:
                     log_event("player_hit")
                     print("Game over!")
+                    print(f'your score was {int(score)}')
+                    print("high score 357 by jj-builds")
                     sys.exit()
                 else:
                     asteroid.kill()
@@ -75,7 +79,7 @@ def main():
 
         for thing in drawable:
             thing.draw(screen)
+        score += dt
         pygame.display.flip()
-
 if __name__ == "__main__":
     main()
