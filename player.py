@@ -4,6 +4,7 @@ from shot import Shot
 from shield import Shield
 import pygame
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from laser import Laser
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
@@ -14,6 +15,7 @@ class Player(CircleShape):
         self.shield_timer = 15
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
+        self.laser = True
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)

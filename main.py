@@ -12,6 +12,7 @@ from shield_field import ShieldField
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from bomb import Bomb
 from bombfield import BombField
+from laser import Laser
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -37,6 +38,7 @@ def main():
     shield = Shield(screen)
     asteroid_field = AsteroidField()
     Bomb.containers = (drawable, explodable)
+    Laser.containers = (drawable)
     bomb = Bomb(screen)
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
     while True:
