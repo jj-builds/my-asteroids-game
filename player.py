@@ -15,7 +15,7 @@ class Player(CircleShape):
         self.shield_timer = 15
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
-        self.laser = True
+        self.laser = False
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -60,8 +60,12 @@ class Player(CircleShape):
             if self.timer > 0:
                 return
             else:
-                self.timer = PLAYER_SHOOT_COOLDOWN_SECONDS
                 self.shoot()
+
+        if keys[pygame.K_l] == True:
+            self.laser = True
+        elif keys[pygame.K_l] == False:
+            self.laser = False
 
         if self.position[1] > self.s_h:
             self.position[1] = 0

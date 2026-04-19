@@ -38,9 +38,10 @@ def main():
     shield = Shield(screen)
     asteroid_field = AsteroidField()
     Bomb.containers = (drawable, explodable)
-    Laser.containers = (drawable)
+    Laser.containers = (drawable,)
     bomb = Bomb(screen)
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
+    laser = Laser(player)
     while True:
         dt = (clock.tick(60) / 1000)
         log_state()
@@ -57,11 +58,13 @@ def main():
                     log_event("player_hit")
                     print("Game over!")
                     print(f'your score was {int(score)}')
-                    print("high score 357 by jj-builds")
+                    print("high score 1294 by jj-builds")
                     sys.exit()
                 else:
                     asteroid.kill()
                     player.forcefield = False
+            if laser.collides_with(asteroid) and player.laser == True:
+                asteroid.split()
         for shield in shields:
             if shield and player.collides_with(shield):
                 player.forcefield = True
@@ -78,7 +81,6 @@ def main():
                     my_list = bomb.explode()
                     for asteroid in asteroids:
                         asteroid.in_area(my_list[0], my_list[1], my_list[2], my_list[3])
-
         for thing in drawable:
             thing.draw(screen)
         score += dt
