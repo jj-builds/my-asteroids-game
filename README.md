@@ -8,7 +8,7 @@ circles to find out what they do!
 
 ## Installation
 If you don't have uv, pygame, git, or python installed,
-install them (see **More Installation**). Then run `git pull https://github.com/jj-builds/my-asteroids-game main`  or `git clone https://github.com/jj-builds/my-asteroids-game.git` in your terminal. This
+install them (see **More Installation**). Then run `mkdir asteroids cd asteroids`. Then run `git pull https://github.com/jj-builds/my-asteroids-game main`  or `git clone https://github.com/jj-builds/my-asteroids-game.git` in your terminal. This
 makes a copy of it on your computer since I haven't figured
 out how to run it on GitHub. To run the game, run `uv run main.py` (again, in your terminal). This will open a new
 window with the game.
