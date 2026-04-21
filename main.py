@@ -85,5 +85,7 @@ def main():
             thing.draw(screen)
         score += dt
         pygame.display.flip()
-if __name__ == "__main__":
-    main()
+main()
+
+
+

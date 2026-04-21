@@ -32,4 +32,4 @@ Please report other bugs [here](https://github.com/jj-builds/my-asteroids-game/i
 ## Other notes
 * I'm a beginner so please don't judge me
 * Please edit the `print(high score 1294 by jj-builds)` line when you get a higher score to say `print(high score <SCORE> by <YOURNAME>)`
-Note: replace <SCORE> with your score and <YOURNAME> with your name.
+Note: replace `<SCORE>` with your score and `<YOURNAME>` with your name.

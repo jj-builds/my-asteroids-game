@@ -57,15 +57,9 @@ class Player(CircleShape):
         if keys[pygame.K_DOWN]:
             self.move(-dt)
         if keys[pygame.K_SPACE]:
-            if self.timer > 0:
-                return
-            else:
+            if self.timer <= 0:
+                self.timer = 0.3
                 self.shoot()
-
-        if keys[pygame.K_l] == True:
-            self.laser = True
-        elif keys[pygame.K_l] == False:
-            self.laser = False
 
         if self.position[1] > self.s_h:
             self.position[1] = 0
