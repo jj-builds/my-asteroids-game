@@ -17,8 +17,10 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 36)
     dt = 0
     score = 0
+    points = 0
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
@@ -58,7 +60,7 @@ def main():
                     log_event("player_hit")
                     print("Game over!")
                     print(f'your score was {int(score)}')
-                    print("high score 1294 by jj-builds")
+                    print("high score 6470 by jj-builds")
                     sys.exit()
                 else:
                     asteroid.kill()
@@ -76,6 +78,7 @@ def main():
                     log_event("asteroid_shot")
                     asteroid.split()
                     shot.kill()
+                    points += 1
             for bomb in explodable:
                 if shot.collides_with(bomb):
                     my_list = bomb.explode()
@@ -83,7 +86,13 @@ def main():
                         asteroid.in_area(my_list[0], my_list[1], my_list[2], my_list[3])
         for thing in drawable:
             thing.draw(screen)
-        score += dt
+        score += points
+        points = 0
+        if player.fuel > 10:
+            text_surface = font.render(f"Score: {int(score)}", True, (255, 255, 255))
+        else:
+            text_surface = font.render("LOW FUEL", True, (255, 255, 255))
+        screen.blit(text_surface, ((SCREEN_WIDTH / 2), (SCREEN_HEIGHT - 50)))
         pygame.display.flip()
 main()
 

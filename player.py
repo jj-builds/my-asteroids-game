@@ -16,6 +16,7 @@ class Player(CircleShape):
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
         self.laser = False
+        self.fuel = 100
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -60,6 +61,16 @@ class Player(CircleShape):
             if self.timer <= 0:
                 self.timer = 0.3
                 self.shoot()
+
+        if keys[pygame.K_LSHIFT] and keys[pygame.K_RSHIFT] and keys[pygame.K_a]:
+            if keys[pygame.K_l] == True:
+                self.laser = True
+        elif keys[pygame.K_l] or keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT] or keys[pygame.K_a] == False:
+                self.laser = False
+
+        if keys[pygame.K_d] and keys[pygame.K_RIGHT] and keys[pygame.K_m]:
+            self.shoot()
+
 
         if self.position[1] > self.s_h:
             self.position[1] = 0
