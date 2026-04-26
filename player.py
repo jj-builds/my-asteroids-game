@@ -16,7 +16,7 @@ class Player(CircleShape):
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
         self.laser = False
-        self.fuel = 15
+        self.fuel = 50
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)

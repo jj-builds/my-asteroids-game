@@ -14,7 +14,7 @@ class Shield(CircleShape):
         self.s_w = SCREEN_WIDTH
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "red", self.position, self.radius, 2)
+        pygame.draw.circle(screen, "red", self.position, self.radius)
 
     def update(self, dt, screen):
         self.position += self.velocity * dt

@@ -81,7 +81,7 @@ def main():
 
         for fuel_asteroid in fuel_asteroids:
             if fuel_asteroid and player.collides_with(fuel_asteroid):
-                player.fuel = 90
+                player.fuel = 45
                 fuel_asteroid.kill()
 
         for shot in shots:
@@ -100,9 +100,11 @@ def main():
             thing.draw(screen)
         score += points
         points = 0
-        if player.fuel > 10:
+        if player.fuel <= 0:
+            text_surface = font.render("NO FUEL", True, (255, 255, 255))
+        elif player.fuel > 10:
             text_surface = font.render(f"Score: {int(score)}", True, (255, 255, 255))
-        else:
+        elif player.fuel < 10:
             text_surface = font.render("LOW FUEL", True, (255, 255, 255))
         screen.blit(text_surface, ((SCREEN_WIDTH / 2), (SCREEN_HEIGHT - 50)))
         pygame.display.flip()
