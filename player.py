@@ -16,7 +16,7 @@ class Player(CircleShape):
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
         self.laser = False
-        self.fuel = 100
+        self.fuel = 15
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -46,17 +46,21 @@ class Player(CircleShape):
         if keys[pygame.K_d]:
             self.rotate(dt)
         if keys[pygame.K_w]:
-            self.move(dt)
+            if self.fuel > 0:
+                self.move(dt)
         if keys[pygame.K_s]:
-            self.move(-dt)
+            if self.fuel > 0:
+                self.move(-dt)
         if keys[pygame.K_LEFT]:
             self.rotate(-dt)
         if keys[pygame.K_RIGHT]:
             self.rotate(dt)
         if keys[pygame.K_UP]:
-            self.move(dt)
+            if self.fuel > 0:
+                self.move(dt)
         if keys[pygame.K_DOWN]:
-            self.move(-dt)
+            if self.fuel > 0:
+                self.move(-dt)
         if keys[pygame.K_SPACE]:
             if self.timer <= 0:
                 self.timer = 0.3
@@ -82,7 +86,8 @@ class Player(CircleShape):
         elif self.position[0] < 0:
             self.position[0] = self.s_w
         
-        self.fuel -= dt
+        if self.fuel > 0:
+            self.fuel -= dt
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)

@@ -8,7 +8,9 @@ from logger import log_event
 from player import Player
 from asteroid import Asteroid
 from shield import Shield
+from fuel import Fuel
 from shield_field import ShieldField
+from fuel_field import FuelField
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from bomb import Bomb
 from bombfield import BombField
@@ -26,22 +28,27 @@ def main():
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
     shields = pygame.sprite.Group()
+    fuel_asteroids = pygame.sprite.Group()
     explodable = pygame.sprite.Group()
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable,)
     ShieldField.containers = (updatable,)
     BombField.containers = (updatable,)
+    FuelField.containers = (updatable,)
     bombfield = BombField()
     shield_field = ShieldField()
+    fuelfield = FuelField()
     hurdle_spawner = AsteroidField()
     Shot.containers = (shots, drawable, updatable)
     Shield.containers = (updatable, drawable, shields)
+    Fuel.containers = (updatable, drawable, fuel_asteroids)
     shield = Shield(screen)
     asteroid_field = AsteroidField()
     Bomb.containers = (drawable, explodable)
     Laser.containers = (drawable,)
     bomb = Bomb(screen)
+    fuel_asteroid = Fuel(screen)
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
     laser = Laser(player)
     while True:
@@ -59,8 +66,8 @@ def main():
                 if player.forcefield == False:
                     log_event("player_hit")
                     print("Game over!")
-                    print(f'your score was {int(score)}')
-                    print("high score 1352 by jj-builds")
+                    print(f'Your score was {int(score)}')
+                    print("High score 1352 by jj-builds")
                     sys.exit()
                 else:
                     asteroid.kill()
@@ -71,6 +78,11 @@ def main():
             if shield and player.collides_with(shield):
                 player.forcefield = True
                 shield.kill()
+
+        for fuel_asteroid in fuel_asteroids:
+            if fuel_asteroid and player.collides_with(fuel_asteroid):
+                player.fuel = 90
+                fuel_asteroid.kill()
 
         for shot in shots:
             for asteroid in asteroids:
