@@ -82,6 +82,7 @@ class Player(CircleShape):
         elif self.position[0] < 0:
             self.position[0] = self.s_w
         
+        self.fuel -= dt
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)

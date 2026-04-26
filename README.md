@@ -31,8 +31,8 @@ Please report other bugs [here](https://github.com/jj-builds/my-asteroids-game/i
 
 ## Other notes
 * I'm a beginner so please don't judge me
-* Please edit the `print(high score 6470 by jj-builds)` line when you get a higher score to say `print(high score <SCORE> by <YOURNAME>)`
+* Please edit the `print(high score 1352 by jj-builds)` line (in main.py) when you get a higher score to say `print(high score <SCORE> by <YOURNAME>)`
 Note: replace `<SCORE>` with your score and `<YOURNAME>` with your name.
 
-### How to contribute
-I was hoping you wouldn't look at this, but since we're here midsentence, please star this repo
+## How to contribute
+Please star this repo and report bugs, or, if you know python, please fork this repository and make a pull request.

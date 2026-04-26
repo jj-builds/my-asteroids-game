@@ -60,7 +60,7 @@ def main():
                     log_event("player_hit")
                     print("Game over!")
                     print(f'your score was {int(score)}')
-                    print("high score 6470 by jj-builds")
+                    print("high score 1352 by jj-builds")
                     sys.exit()
                 else:
                     asteroid.kill()
