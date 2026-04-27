@@ -26,7 +26,7 @@ player is represented as a circle for collision detection.
 Please report other bugs [here](https://github.com/jj-builds/my-asteroids-game/issues) so that I can fix them.
 
 ## Upcoming feature(s)
-* ammunition limit & reloading
+**You** think of something and put it [here](https://github.com/jj-builds/my-asteroids-game/issues?q=state%3Aopen%20label%3Aupdate) by pressing 'New issue'
 
 ## Other notes
 * I'm a beginner so please don't judge me

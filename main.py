@@ -15,6 +15,29 @@ from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from bomb import Bomb
 from bombfield import BombField
 from laser import Laser
+from particle import ExplosionParticle
+def draw_fuel_bar(screen, player):
+    # Bar settings
+    x, y = 20, 20
+    width, max_height = 20, 150
+    
+    # Calculate current height
+    ratio = player.fuel / player.max_fuel
+    current_height = max_height * ratio
+    
+    # Calculate the Y to grow upwards from a base
+    # Let's say the base of the bar is at y=170
+    bottom_y = y + max_height
+    top_left_y = bottom_y - current_height
+
+    # 1. Draw Background (Gray)
+    bg_rect = pygame.Rect(x, y, width, max_height)
+    pygame.draw.rect(screen, (50, 50, 50), bg_rect)
+
+    # 2. Draw Fuel (Yellow)
+    if current_height > 0:
+        fuel_rect = pygame.Rect(x, top_left_y, width, current_height)
+        pygame.draw.rect(screen, "yellow", fuel_rect)
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -28,9 +51,11 @@ def main():
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
     shields = pygame.sprite.Group()
+    particles = pygame.sprite.Group()
     fuel_asteroids = pygame.sprite.Group()
     explodable = pygame.sprite.Group()
     Player.containers = (updatable, drawable)
+    ExplosionParticle.containers = (particles, drawable, updatable)
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable,)
     ShieldField.containers = (updatable,)
@@ -53,14 +78,12 @@ def main():
     laser = Laser(player)
     while True:
         dt = (clock.tick(60) / 1000)
+        screen.fill('black')
+        pygame.draw.circle(screen, "red", (100, 100), 10)
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        screen.fill('black')
-        for thing in updatable:
-            thing.update(dt, screen)
-
         for asteroid in asteroids:
             if asteroid.collides_with(player) == True:
                 if player.forcefield == False:
@@ -81,13 +104,15 @@ def main():
 
         for fuel_asteroid in fuel_asteroids:
             if fuel_asteroid and player.collides_with(fuel_asteroid):
-                player.fuel = 45
+                player.fuel = 50
                 fuel_asteroid.kill()
 
         for shot in shots:
             for asteroid in asteroids:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
+                    for i in range(20):
+                        p = ExplosionParticle(asteroid.position.x, asteroid.position.y)
                     asteroid.split()
                     shot.kill()
                     points += 1
@@ -107,8 +132,8 @@ def main():
         elif player.fuel < 10:
             text_surface = font.render("LOW FUEL", True, (255, 255, 255))
         screen.blit(text_surface, ((SCREEN_WIDTH / 2), (SCREEN_HEIGHT - 50)))
+        for thing in updatable:
+            thing.update(dt, screen)
+        draw_fuel_bar(screen, player)
         pygame.display.flip()
 main()
-
-
-

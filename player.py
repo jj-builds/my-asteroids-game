@@ -3,7 +3,7 @@ from circleshape import CircleShape
 from shot import Shot
 from shield import Shield
 import pygame
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import *
 from laser import Laser
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -17,6 +17,9 @@ class Player(CircleShape):
         self.s_w = SCREEN_WIDTH
         self.laser = False
         self.fuel = 50
+        self.velocity = pygame.Vector2(0, 0)
+        self.angular_velocity = 0
+        self.max_fuel = 50
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -32,7 +35,7 @@ class Player(CircleShape):
             pygame.draw.circle(screen, "yellow", self.position, self.radius + 10, 2)
 
     def rotate(self, dt):
-        self.rotation += PLAYER_TURN_SPEED * dt
+        self.angular_velocity += PLAYER_ROT_ACCEL * dt
 
     def shoot(self):
         shot = Shot(self.position[0], self.position[1], SHOT_RADIUS)
@@ -85,10 +88,22 @@ class Player(CircleShape):
             self.position[0] = 0
         elif self.position[0] < 0:
             self.position[0] = self.s_w
-        
-        if self.fuel > 0:
-            self.fuel -= dt
+
+        self.position += self.velocity * dt
+    
+    # DECELERATION (Friction):
+    # This slowly pulls the velocity back toward zero
+        self.velocity *= PLAYER_FRICTION
+        # 1. Apply angular velocity to the rotation
+        self.rotation += self.angular_velocity * dt
+    
+    # 2. Apply friction to the spin (Deceleration)
+        self.angular_velocity *= PLAYER_FRICTION
 
     def move(self, dt):
+        # Calculate a direction vector based on current rotation
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+    
+        # ACCELERATION: Add to velocity instead of position
+        self.velocity += forward * PLAYER_ACCEL * dt
+        self.fuel -= ((2 / 3) * dt)
