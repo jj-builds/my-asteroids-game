@@ -37,4 +37,4 @@ Note: replace `<SCORE>` with your score and `<YOURNAME>` with your name.
 ## How to contribute
 Please star this repo and report bugs, or, if you know python, please fork this repository and make a pull request.
 
-P.S. the lightning bolt 
+P.S. the lightning bolt makes you have a laser for 7 seconds
