@@ -36,47 +36,46 @@ class Player(CircleShape):
 
     def rotate(self, dt):
         self.angular_velocity += PLAYER_ROT_ACCEL * dt
+        self.fuel -= (dt / 10)
 
     def shoot(self):
         shot = Shot(self.position[0], self.position[1], SHOT_RADIUS)
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
 
     def update(self, dt, screen):
-        keys = pygame.key.get_pressed()
-        self.timer -= dt
-        if keys[pygame.K_a]:
-            self.rotate(-dt)
-        if keys[pygame.K_d]:
-            self.rotate(dt)
-        if keys[pygame.K_w]:
-            if self.fuel > 0:
-                self.move(dt)
-        if keys[pygame.K_s]:
-            if self.fuel > 0:
-                self.move(-dt)
-        if keys[pygame.K_LEFT]:
-            self.rotate(-dt)
-        if keys[pygame.K_RIGHT]:
-            self.rotate(dt)
-        if keys[pygame.K_UP]:
-            if self.fuel > 0:
-                self.move(dt)
-        if keys[pygame.K_DOWN]:
-            if self.fuel > 0:
-                self.move(-dt)
-        if keys[pygame.K_SPACE]:
-            if self.timer <= 0:
-                self.timer = 0.3
-                self.shoot()
+        if self.fuel > 0:
+            keys = pygame.key.get_pressed()
+            self.timer -= dt
+            if keys[pygame.K_a]:
+                self.rotate(-dt)
+            if keys[pygame.K_d]:
+                self.rotate(dt)
+            if keys[pygame.K_w]:
+                if self.fuel > 0:
+                    self.move(dt)
+            if keys[pygame.K_s]:
+                if self.fuel > 0:
+                    self.move(-dt)
+            if keys[pygame.K_LEFT]:
+                self.rotate(-dt)
+            if keys[pygame.K_RIGHT]:
+                self.rotate(dt)
+            if keys[pygame.K_UP]:
+                if self.fuel > 0:
+                    self.move(dt)
+            if keys[pygame.K_DOWN]:
+                if self.fuel > 0:
+                    self.move(-dt)
+            if keys[pygame.K_SPACE]:
+                if self.timer <= 0:
+                    self.timer = 0.3
+                    self.shoot()
 
-        if keys[pygame.K_LSHIFT] and keys[pygame.K_RSHIFT] and keys[pygame.K_a]:
-            if keys[pygame.K_l] == True:
+            if keys[pygame.K_LSHIFT] and keys[pygame.K_RSHIFT] and keys[pygame.K_a] and keys[pygame.K_l]:
                 self.laser = True
-        elif keys[pygame.K_l] or keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT] or keys[pygame.K_a] == False:
-                self.laser = False
 
-        if keys[pygame.K_d] and keys[pygame.K_RIGHT] and keys[pygame.K_m]:
-            self.shoot()
+            if keys[pygame.K_d] and keys[pygame.K_n] and keys[pygame.K_RIGHT] == True and keys[pygame.K_m] == False:
+                self.shoot()
 
 
         if self.position[1] > self.s_h:

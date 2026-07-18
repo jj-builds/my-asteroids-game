@@ -1,0 +1,2 @@
+import pygame.examples.headless_no_windows_needed
+pygame.examples.headless_no_windows_needed()

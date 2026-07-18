@@ -16,25 +16,16 @@ from bomb import Bomb
 from bombfield import BombField
 from laser import Laser
 from particle import ExplosionParticle
+from power_up import Powerup
 def draw_fuel_bar(screen, player):
-    # Bar settings
     x, y = 20, 20
-    width, max_height = 20, 150
-    
-    # Calculate current height
+    width, max_height = 20, 200
     ratio = player.fuel / player.max_fuel
     current_height = max_height * ratio
-    
-    # Calculate the Y to grow upwards from a base
-    # Let's say the base of the bar is at y=170
     bottom_y = y + max_height
     top_left_y = bottom_y - current_height
-
-    # 1. Draw Background (Gray)
     bg_rect = pygame.Rect(x, y, width, max_height)
     pygame.draw.rect(screen, (50, 50, 50), bg_rect)
-
-    # 2. Draw Fuel (Yellow)
     if current_height > 0:
         fuel_rect = pygame.Rect(x, top_left_y, width, current_height)
         pygame.draw.rect(screen, "yellow", fuel_rect)
@@ -64,6 +55,7 @@ def main():
     bombfield = BombField()
     shield_field = ShieldField()
     fuelfield = FuelField()
+    Powerup.containers = (drawable, updatable)
     hurdle_spawner = AsteroidField()
     Shot.containers = (shots, drawable, updatable)
     Shield.containers = (updatable, drawable, shields)
@@ -76,6 +68,8 @@ def main():
     fuel_asteroid = Fuel(screen)
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
     laser = Laser(player)
+    my_num = 7
+    Power_up = Powerup(50, 50, 25)
     while True:
         dt = (clock.tick(60) / 1000)
         screen.fill('black')
@@ -91,7 +85,7 @@ def main():
                     print("Game over!")
                     print(f'Your score was {int(score)}')
                     print("High score 1352 by jj-builds")
-                    sys.exit()
+                    #sys.exit()
                 else:
                     asteroid.kill()
                     player.forcefield = False
@@ -123,6 +117,20 @@ def main():
                         asteroid.in_area(my_list[0], my_list[1], my_list[2], my_list[3])
         for thing in drawable:
             thing.draw(screen)
+        if my_num >= 0 and player.laser == True:
+            my_num -= dt
+            player.laser = True
+        else:
+            player.laser = False
+            my_num = 7
+
+        if player.collides_with(Power_up) and Power_up.is_visible:
+            print(my_num)
+            print(dt)
+            Power_up.is_visible = False
+            Power_up.kill()
+            player.laser = True
+            print(Power_up.is_visible)
         score += points
         points = 0
         if player.fuel <= 0:

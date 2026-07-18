@@ -7,14 +7,22 @@ from player import Player
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
+        if self.radius / ASTEROID_MIN_RADIUS == 3:
+            self.color = (169, 169, 169)
+        elif self.radius / ASTEROID_MIN_RADIUS == 2:
+            self.color = (211, 211, 211)
+        else:
+            self.color = (254, 254, 254)
     def draw(self, screen):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_b]:
             pygame.draw.circle(screen, "blue", self.position, self.radius)
         elif keys[pygame.K_r]:
             pygame.draw.circle(screen, "red", self.position, self.radius)
+        elif keys[pygame.K_u]:
+            self.split()
         else:
-            pygame.draw.circle(screen, "white", self.position, self.radius)
+            pygame.draw.circle(screen, self.color, self.position, self.radius)
     def update(self, dt, screen):
         self.position += (self.velocity * dt)
     def split(self):
