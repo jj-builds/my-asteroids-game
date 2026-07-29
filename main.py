@@ -17,6 +17,7 @@ from bombfield import BombField
 from laser import Laser
 from particle import ExplosionParticle
 from power_up import Powerup
+from powerupfield import PowerupField as pf
 def draw_fuel_bar(screen, player):
     x, y = 20, 20
     width, max_height = 20, 200
@@ -37,6 +38,7 @@ def main():
     dt = 0
     score = 0
     points = 0
+    Powerups = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
@@ -52,10 +54,12 @@ def main():
     ShieldField.containers = (updatable,)
     BombField.containers = (updatable,)
     FuelField.containers = (updatable,)
+    pf.containers = (updatable,)
     bombfield = BombField()
     shield_field = ShieldField()
     fuelfield = FuelField()
-    Powerup.containers = (drawable, updatable)
+    pF = pf()
+    Powerup.containers = (drawable, updatable, Powerups)
     hurdle_spawner = AsteroidField()
     Shot.containers = (shots, drawable, updatable)
     Shield.containers = (updatable, drawable, shields)
@@ -70,6 +74,7 @@ def main():
     laser = Laser(player)
     my_num = 7
     Power_up = Powerup(50, 50, 25)
+    Power_up.containers = (Powerups,)
     while True:
         dt = (clock.tick(60) / 1000)
         screen.fill('black')
@@ -84,8 +89,8 @@ def main():
                     log_event("player_hit")
                     print("Game over!")
                     print(f'Your score was {int(score)}')
-                    print("High score 1352 by jj-builds")
-                    #sys.exit()
+                    print("High scoare 1352 by jj-builds")
+                    sys.exit()
                 else:
                     asteroid.kill()
                     player.forcefield = False
@@ -123,14 +128,11 @@ def main():
         else:
             player.laser = False
             my_num = 7
-
-        if player.collides_with(Power_up) and Power_up.is_visible:
-            print(my_num)
-            print(dt)
-            Power_up.is_visible = False
-            Power_up.kill()
-            player.laser = True
-            print(Power_up.is_visible)
+        for pPowerup in Powerups:
+            if player.collides_with(pPowerup) and pPowerup.is_visible:
+                pPowerup.is_visible = False
+                pPowerup.kill()
+                player.laser = True
         score += points
         points = 0
         if player.fuel <= 0:
