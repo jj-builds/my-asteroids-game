@@ -7,6 +7,7 @@ class BombField(pygame.sprite.Sprite):
 
     def update(self, dt, screen):
         self.timer += dt
-        if self.timer >= 10:
+        if self.timer >= 20:
             self.timer = 0
             Bomb(screen)
+                

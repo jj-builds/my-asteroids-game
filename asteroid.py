@@ -45,3 +45,35 @@ class Asteroid(CircleShape):
             return
         else:
             return
+    def bounce_if_colliding(self, other):
+    # 1. Check if they are colliding (and aren't the same asteroid)
+        if self != other and self.collides_with(other):
+        
+            # 2. Find the collision normal (direction from self to other)
+            axis = other.position - self.position
+            distance = axis.length()
+        
+        # Prevent division by zero if they occupy the exact same spot
+            if distance == 0:
+                return
+            
+            normal = axis.normalize()
+        
+        # 3. Separate them slightly so they don't get stuck together ("stiction")
+            overlap = (self.radius + other.radius) - distance
+            self.position -= normal * (overlap / 2)
+            other.position += normal * (overlap / 2)
+        
+        # 4. Swap or reflect velocities along the collision normal (Elastic collision)
+        # Using relative velocity
+            vel_safe = self.velocity - other.velocity
+            vel_along_normal = vel_safe.dot(normal)
+        
+        # Do not resolve if velocities are separating
+            if vel_along_normal < 0:
+                return
+            
+        # Assuming equal mass for simplicity
+            impulse = normal * vel_along_normal
+            self.velocity -= impulse
+            other.velocity += impulse
