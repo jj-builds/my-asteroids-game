@@ -41,3 +41,5 @@ P.S. the lightning bolt makes you have a laser for 7 seconds
 Motivation
 Quick Start
 Usage
+Contributing
+
