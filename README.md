@@ -1,6 +1,6 @@
 # My-asteroids-game
 ## Introduction
-This is a recreation of the classsic game of asteroids. You
+This is a recreation of the classic game of asteroids. You
 move by wasd or the arrow keys. Press space to fire. Run
 into red circles to gain one shield. You have a max of one
 shield. The asteroids are white circles. When you see 'LOW FUEL' at the bottom of the screen, run into a blue circle. Shoot the yellow
