@@ -9,12 +9,12 @@ class Fuel(CircleShape):
         y = random.randint(0, SCREEN_HEIGHT)
         super().__init__(x, y, SHIELD_RADIUS)
         self.velocity = pygame.Vector2(random.randint(0, 75), random.randint(0, 75))
-        self.draw(screen)
         self.s_h = SCREEN_HEIGHT
         self.s_w = SCREEN_WIDTH
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, "blue", self.position, self.radius)
+    def draw(self, screen, camera):
+        screen_pos = camera.apply(self.position)
+        pygame.draw.circle(screen, "blue", screen_pos, self.radius)
 
     def update(self, dt, screen):
         self.position += self.velocity * dt

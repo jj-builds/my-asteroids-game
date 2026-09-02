@@ -13,32 +13,23 @@ class Powerup(CircleShape):
         self.s_w = SCREEN_WIDTH
         self.is_visible = True
     
-    def draw(self, screen):
+    def draw(self, screen, camera):
+        screen_pos = camera.apply(self.position)
         if self.is_visible:
             r = self.radius
         
             points = [
-            self.position + pygame.Vector2(-r * 0.4, -r), # Start: Top Left
-            self.position + pygame.Vector2(-r * 0.4, 0.17 * r),  # 1. Vertical line down
-            self.position + pygame.Vector2(0, 0.17 * r),         # 2. Flat line
-            self.position + pygame.Vector2(r * 0.4, r),   # 3. Diagonal line down
-            self.position + pygame.Vector2(r * 0.4, -(0.17 * r)),   # 4. Vertical line up
-            self.position + pygame.Vector2(0, -(0.17 * r)),         # 5. Horizontal line across
+            screen_pos + pygame.Vector2(-r * 0.4, -r), # Start: Top Left
+            screen_pos + pygame.Vector2(-r * 0.4, 0.17 * r),  # 1. Vertical line down
+            screen_pos + pygame.Vector2(0, 0.17 * r),         # 2. Flat line
+            screen_pos + pygame.Vector2(r * 0.4, r),   # 3. Diagonal line down
+            screen_pos + pygame.Vector2(r * 0.4, -(0.17 * r)),   # 4. Vertical line up
+            screen_pos + pygame.Vector2(0, -(0.17 * r)),         # 5. Horizontal line across
         ]
         pygame.draw.polygon(screen, "yellow", points)
 
     def update(self, dt, screen):
         self.position += self.velocity * dt
-        if self.position[1] > self.s_h:
-            self.position[1] = 0
-        elif self.position[1] < 0:
-            self.position[1] = self.s_h
-
-        if self.position[0] > self.s_w:
-            self.position[0] = 0
-        elif self.position[0] < 0:
-            self.position[0] = self.s_w
-
         if random.random() < 0.03: # 10% chance per frame to drop a spark
             counter = 1
             while counter > 0:

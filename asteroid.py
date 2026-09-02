@@ -13,16 +13,17 @@ class Asteroid(CircleShape):
             self.color = (211, 211, 211)
         else:
             self.color = (254, 254, 254)
-    def draw(self, screen):
+    def draw(self, screen, camera):
+        screen_pos = camera.apply(self.position)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_b]:
-            pygame.draw.circle(screen, "blue", self.position, self.radius)
+            pygame.draw.circle(screen, "blue", screen_pos, self.radius)
         elif keys[pygame.K_r]:
-            pygame.draw.circle(screen, "red", self.position, self.radius)
+            pygame.draw.circle(screen, "red", screen_pos, self.radius)
         elif keys[pygame.K_u]:
             self.split()
         else:
-            pygame.draw.circle(screen, self.color, self.position, self.radius)
+            pygame.draw.circle(screen, self.color, screen_pos, self.radius)
     def update(self, dt, screen):
         self.position += (self.velocity * dt)
     def split(self):

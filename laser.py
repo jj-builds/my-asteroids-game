@@ -5,9 +5,10 @@ class Laser(pygame.sprite.Sprite):
         super().__init__(self.containers)
         self.player = player
 
-    def draw(self, screen):
+    def draw(self, screen, camera):
         if self.player.laser == True:
-            self.start = self.player.position.copy()
+            screen_pos = camera.apply(self.player.position)
+            self.start = screen_pos.copy()
             self.end = self.start + pygame.Vector2(0, 800).rotate(self.player.rotation)
             pygame.draw.line(screen, "red", self.start, self.end, 2)
 

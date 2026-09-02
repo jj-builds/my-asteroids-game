@@ -15,4 +15,4 @@ SHIELD_TIMER = 15
 SHIELD_RADIUS = 30
 PLAYER_ACCEL = 500
 PLAYER_ROT_ACCEL = 500   # How fast you gain spin speed
-PLAYER_FRICTION = 0.98 # Lower is more friction, 1.0 is no friction
+PLAYER_FRICTION = 0.9999999 # Lower is more friction, 1.0 is no friction

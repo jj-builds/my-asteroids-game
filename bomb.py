@@ -13,8 +13,9 @@ class Bomb(CircleShape):
         self.s_w = SCREEN_WIDTH
         self.explosion_radius = 1000
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, "yellow", self.position, self.radius)
+    def draw(self, screen, camera):
+        screen_pos = camera.apply(self.position)
+        pygame.draw.circle(screen, "yellow", screen_pos, self.radius)
 
     def update(self, dt, screen):
         self.position += self.velocity * dt
