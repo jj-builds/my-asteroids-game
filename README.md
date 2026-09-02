@@ -1,6 +1,6 @@
 # My-asteroids-game
 ## Introduction
-This is a recreation of the classsic game of asteroids. You
+This is a recreation of the classic game of asteroids. You
 move by wasd or the arrow keys. Press space to fire. Run
 into red circles to gain one shield. You have a max of one
 shield. The asteroids are white circles. When you see 'LOW FUEL' at the bottom of the screen (You can track your fuel with the yellow fuel bar on the right), run into a blue circle, or select a planet to land on, then press L. Autopilot will guide the ship safly to a pad for touchdown. Press L to launch again (You will get refueled after landing). Shoot the yellow
@@ -37,3 +37,4 @@ Note: replace `<SCORE>` with your score and `<YOURNAME>` with your name.
 Please star this repo and report bugs. Thank you!
 
 P.S. the lightning bolt makes you have a laser for 7 seconds
+
